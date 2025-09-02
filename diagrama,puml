@@ -1,0 +1,142 @@
+@startuml
+title Diagrama de clases - Mario Bros (1983)
+
+class Juego {
+  -nivelActual : int
+  -puntaje : int
+  +iniciar()
+  +terminar()
+  +reiniciar()
+}
+class Personajes {
+  -nombre : String
+  -vidas : int
+  -posX : int
+  -posY : int
+  +mover()
+  +saltar()
+}
+
+class Mario
+class Luigi
+class Enemigo {
+  -tipo : String
+  -velocidad : int
+  +mover()
+}
+class Koopa {
+  +caerDeEspalda() : void
+}
+class Cangrejo {
+  +enojarse() : void
+}
+class Mosca {
+  +volar() : void
+}
+
+class Escenario {
+  -plataformas : List<Plataforma>
+  -tuberias : List<Tuberia>
+  -items : List<Item>
+  +generar() : void
+  +actualizar() : void
+}
+class Plataforma {
+  -resistencia : int
+  +romper() : void
+}
+class Tuberia {
+  -destino : Escenario
+  +transportarJugador(j:Personajes) : void
+}
+class Bloque {
+  -contenido : Item
+  +romper() : void
+  +liberarItem() : Item
+}
+class Item
+class Moneda {
+  -valor : int
+  +recolectar() : void
+}
+class Cuadrado
+class Circulo
+class LxL
+class "2πr" as Circunferencia
+class DistanciaTiempo
+class EstadoJuego
+class Puntaje
+class Vidas{
+   -numero : int
+   +getVidas() : int
+   +perderVida() : void
+  +ganarVida() : void
+}
+class Nivel
+class Controlador
+class Fisica
+class Animacion
+class Sonido {
+  +Efecto : void
+  +Musica : void
+  -detener() : void
+}
+class Graficos
+class DetectorColisiones
+class EntradaUsuario
+class Movimiento2D{
+   -cordenadas : String
+}
+class Velocidad
+class Gravedad{
+    +9.81m/s^2
+}
+class Saltos
+Juego *-- Escenario
+Juego *-- Personajes
+Juego *-- Enemigo
+Juego *-- EstadoJuego
+Juego *-- Controlador
+
+Personajes <|-- Mario
+Personajes <|-- Luigi
+
+Enemigo <|-- Koopa
+Enemigo <|-- Cangrejo
+Enemigo <|-- Mosca
+
+Movimiento2D <|-- Koopa
+Movimiento2D <|-- Cangrejo
+Movimiento2D <|-- Mosca
+
+Escenario *-- Plataforma
+Escenario *-- Tuberia
+Escenario *-- Bloque
+Escenario *-- Item
+Escenario *-- Moneda
+Bloque *-- Cuadrado
+Moneda *-- Circulo
+Cuadrado *-- LxL
+Circulo *-- Circunferencia
+
+EstadoJuego o-- Puntaje
+EstadoJuego o-- Vidas
+EstadoJuego o-- Nivel
+
+Controlador *-- Fisica
+Controlador *-- Animacion
+Controlador *-- Sonido
+Controlador *-- Graficos
+Controlador *-- DetectorColisiones
+Controlador *-- EntradaUsuario
+
+Fisica *-- Movimiento2D
+Fisica *-- Velocidad 
+Velocidad <|-- DistanciaTiempo
+Fisica *-- Gravedad
+Fisica *-- Saltos
+
+Vidas --* Juego
+Puntaje --*Juego
+
+@enduml
